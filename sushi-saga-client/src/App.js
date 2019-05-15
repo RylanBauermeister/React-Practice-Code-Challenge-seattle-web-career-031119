@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SushiContainer from './containers/SushiContainer';
 import Table from './containers/Table';
+import SushiWallet from './components/SushiWallet'
 
 // Endpoint!
 const API = "http://localhost:3000/sushis"
@@ -19,10 +20,11 @@ class App extends Component {
     this.fetchSushis();
     this.eatSushi = this.eatSushi.bind(this)
     this.showMoreSushi = this.showMoreSushi.bind(this)
+    this.addMoney = this.addMoney.bind(this)
   }
 
   eatSushi(sushi){
-    if(this.state.money >= sushi.price){
+    if(this.state.money >= sushi.price && !this.state.eaten.includes(sushi.id)){
       this.setState({
         eaten: this.state.eaten.concat(sushi.id),
         money: this.state.money - sushi.price
@@ -34,6 +36,12 @@ class App extends Component {
     this.setState({
       index: this.state.index + 4 >= 100 ? 0 : this.state.index + 4
     }, this.fetchSushis)
+  }
+
+  addMoney(money){
+    this.setState({
+      money: this.state.money + money
+    })
   }
 
   fetchSushis(){
@@ -49,6 +57,8 @@ class App extends Component {
   render() {
     return (
       <div className="app">
+        <h1 className="App">Sushi Saga!!!</h1>
+
         <SushiContainer
           eatSushi={this.eatSushi}
           sushis={this.state.sushis}
@@ -56,6 +66,7 @@ class App extends Component {
           showMoreSushi={this.showMoreSushi}
         />
         <Table money={this.state.money} eaten={this.state.eaten}/>
+        <SushiWallet addMoney={this.addMoney}/>
       </div>
     );
   }

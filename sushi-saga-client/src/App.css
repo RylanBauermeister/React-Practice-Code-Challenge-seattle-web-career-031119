@@ -2,7 +2,13 @@
   text-align: center;
 }
 
+h1 {
+  grid-area: he;
+}
+
 .App-logo {
+  text-align: center;
+  grid-area: he;
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
